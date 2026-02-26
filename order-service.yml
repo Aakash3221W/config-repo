@@ -1,1 +1,5 @@
+server:
+  port: 8082
 
+custom:
+  message: Hello I am Order Service!
