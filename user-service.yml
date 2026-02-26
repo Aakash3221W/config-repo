@@ -1,5 +1,2 @@
-server:
-  port: 8081
-
 custom:
   message: Hello I am User Service!
