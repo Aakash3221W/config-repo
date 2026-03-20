@@ -1,2 +1,7 @@
 server:
   port: 8080
+
+jwt:
+  secret: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8
+  access-token-expiry: 900000
+  refresh-token-expiry: 604800000
