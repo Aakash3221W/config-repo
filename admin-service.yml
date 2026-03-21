@@ -82,3 +82,8 @@ management:
   health:
     circuitbreakers:
       enabled: true
+spring:
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
