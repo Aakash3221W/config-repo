@@ -20,3 +20,65 @@ jwt:
   secret: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8
   access-token-expiry: 900000
   refresh-token-expiry: 604800000
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      catalogService:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        registerHealthIndicator: true
+      orderService:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 15s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        registerHealthIndicator: true
+      authService:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        registerHealthIndicator: true
+
+  retry:
+    instances:
+      catalogService:
+        maxAttempts: 3
+        waitDuration: 500ms
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+      orderService:
+        maxAttempts: 3
+        waitDuration: 500ms
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+      authService:
+        maxAttempts: 3
+        waitDuration: 500ms
+
+  timelimiter:
+    instances:
+      catalogService:
+        timeoutDuration: 3s
+      orderService:
+        timeoutDuration: 5s
+      authService:
+        timeoutDuration: 2s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,circuitbreakers,retries,bulkheads
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
