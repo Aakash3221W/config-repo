@@ -15,25 +15,40 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
 jwt:
   secret: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8
   access-token-expiry: 900000
   refresh-token-expiry: 604800000
 
-# ─── Resilience4j ────────────────────────────────────────────────────────────
 resilience4j:
   circuitbreaker:
     instances:
       catalogService:
-        slidingWindowType: COUNT_BASED
         slidingWindowSize: 10
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
         registerHealthIndicator: true
-
+      orderService:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 15s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        registerHealthIndicator: true
+      authService:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        registerHealthIndicator: true
   retry:
     instances:
       catalogService:
@@ -41,18 +56,22 @@ resilience4j:
         waitDuration: 500ms
         enableExponentialBackoff: true
         exponentialBackoffMultiplier: 2
-
-  bulkhead:
-    instances:
-      catalogService:
-        maxConcurrentCalls: 10
-        maxWaitDuration: 100ms
-
+      orderService:
+        maxAttempts: 3
+        waitDuration: 500ms
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+      authService:
+        maxAttempts: 3
+        waitDuration: 500ms
   timelimiter:
     instances:
       catalogService:
         timeoutDuration: 3s
-        cancelRunningFuture: true
+      orderService:
+        timeoutDuration: 5s
+      authService:
+        timeoutDuration: 2s
 
 management:
   endpoints:
@@ -65,8 +84,3 @@ management:
   health:
     circuitbreakers:
       enabled: true
-spring:
-  cloud:
-    openfeign:
-      circuitbreaker:
-        enabled: true
