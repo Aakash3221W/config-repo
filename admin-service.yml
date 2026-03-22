@@ -28,56 +28,33 @@ jwt:
 resilience4j:
   circuitbreaker:
     instances:
-      catalogService:
+      catalog-service:
         slidingWindowSize: 10
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
         registerHealthIndicator: true
-      orderService:
+      order-service:
         slidingWindowSize: 10
         failureRateThreshold: 50
         waitDurationInOpenState: 15s
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
         registerHealthIndicator: true
-      authService:
+      auth-service:
         slidingWindowSize: 10
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
         registerHealthIndicator: true
-  retry:
-    instances:
-      catalogService:
-        maxAttempts: 3
-        waitDuration: 500ms
-        enableExponentialBackoff: true
-        exponentialBackoffMultiplier: 2
-      orderService:
-        maxAttempts: 3
-        waitDuration: 500ms
-        enableExponentialBackoff: true
-        exponentialBackoffMultiplier: 2
-      authService:
-        maxAttempts: 3
-        waitDuration: 500ms
-  timelimiter:
-    instances:
-      catalogService:
-        timeoutDuration: 3s
-      orderService:
-        timeoutDuration: 5s
-      authService:
-        timeoutDuration: 2s
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,circuitbreakers,retries,bulkheads
+        include: health,circuitbreakers
   endpoint:
     health:
       show-details: always
