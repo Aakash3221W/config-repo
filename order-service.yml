@@ -26,6 +26,14 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.add.type.headers: false
+    consumer:
+      group-id: order-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: com.shopsphere.orderservice.event.OrderFailedEvent
 
 jwt:
   secret: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8
