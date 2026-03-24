@@ -36,7 +36,7 @@ spring:
         spring.json.value.default.type: com.shopsphere.orderservice.event.OrderFailedEvent
 
 jwt:
-  secret: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8fc057a80fcd04a7d3cfa76ef14937c1c0ea519f8
+  secret: '{cipher}cb2923126505e3939cb7e704bc89450ba0d37f279bfe436c43a71d87f5b327793dd3584b2d1eaeb190e64f9c98ef98ff5f7e5a840806500b859962c0488559e94fecf3ae82cb4bf5df6cf7baa3a725660d0218a4041eb84aeeff5c001050cebd8d3807aee8ec0a1d7903f1778acc4bc6519fd29b4e7105072467b1da953f703c'
   access-token-expiry: 900000
   refresh-token-expiry: 604800000
 
